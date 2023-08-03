@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import router from "./routes/portfolioRoute.js";
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config();
 
@@ -10,6 +11,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const getDirName = function (moduleUrl) {
+  const filename = fileURLToPath(moduleUrl)
+  return path.dirname(filename)
+}
+
+const __dirname = getDirName(import.meta.url)
+console.log(__dirname)
 
 //static files access
 app.use(express.static(path.join(__dirname, './client/dist')))
